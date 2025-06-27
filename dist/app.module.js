@@ -8,12 +8,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
+const typeorm_1 = require("@nestjs/typeorm");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [],
+        imports: [
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                envFilePath: '.env',
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                useFactory: (config) => ({
+                    type: 'postgres',
+                    host: process.env.DATABASE_HOST,
+                    port: parseInt(process.env.DATABASE_PORT || '5432', 10),
+                    database: process.env.DATABASE_NAME,
+                    username: process.env.DATABASE_USER,
+                    password: process.env.DATABASE_PASSWORD,
+                    autoLoadEntities: true,
+                    synchronize: true
+                }),
+                inject: [config_1.ConfigService],
+            }),
+        ],
         controllers: [],
         providers: [],
     })
