@@ -2,6 +2,7 @@ import { Inject, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config'; 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
+import { CommonModule } from './common/common.module';
 
 
 @Module({
@@ -23,7 +24,7 @@ import { ProductsModule } from './products/products.module';
         synchronize: true
       }),
       inject: [ConfigService],
-    }), ProductsModule,
+    }), ProductsModule, CommonModule,
     
   ],
   

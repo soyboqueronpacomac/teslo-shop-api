@@ -16,8 +16,8 @@ export class CreateProductDto {
   title: string;
 
   @IsString()
-  @MinLength(1)
-  slug: string;
+  @IsOptional()
+  slug?: string;
 
   @IsString()
   @IsOptional()
@@ -25,7 +25,6 @@ export class CreateProductDto {
 
   @IsNumber()
   @IsPositive()
-  @IsDecimal()
   @IsOptional()
   price?: number;
 
